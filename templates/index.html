@@ -1,0 +1,72 @@
+<!doctype html>
+{% load render_table from django_tables2 %}
+<head>
+<!--HTML page for Forecasting Application-->
+	<!-- Basics -->
+	
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>Mortgage Balance Forecasting Engine</title>
+
+	<!-- CSS -->
+	{% load staticfiles %}
+    <link rel="stylesheet" href="{% static "css/styles.css" %}">
+    <link rel="stylesheet" href="{% static "css/reset.css" %}">
+    <link rel="stylesheet" href="{{ STATIC_URL }}django_tables2/themes/paleblue/css/screen.css" />
+    <style>
+
+#tablediv{
+	position: fixed;
+	top: 5%;
+	left: 2%;
+    z-index: 999;
+}
+    </style>
+</head>
+
+	<!-- Main HTML -->
+	
+<body>
+	
+	<!-- Begin Page Content -->
+	{% if form.errors %}
+        <p>The values that you have entered didn't match. Please try again.</p>
+    {% endif %}
+
+	<div id="container">
+		
+		<form method="post" enctype="multipart/form-data" action={% url 'forecastingengine.views.calculator_view' %}>
+		{% csrf_token %}
+        <ul>
+          <li><label for="startdate"><b>Forecast Start Date:</b></label><label name="startdate"></label>{{form.startdate}}</li>
+            <li><label for="file"><b>File:</b></label><label name="file"></label>{{form.file}}</li>
+        </ul>
+
+		<div id="lower">
+
+		<label></label><input type="submit" value="Add" name="Add" formmethod="post"><label></label><input type="submit" name="Forecast" value="Forecast"  formmethod="get"><label></label><input type="submit" name="Simulate" value="Simulate"  formmethod="get">
+
+
+		</div>
+		
+		</form>
+		<label><b>{{ response_msg }}</b></label>
+	</div>
+	
+	<div id="tablediv">
+        {% render_table table %}
+    </div>
+	<!-- End Page Content -->
+
+
+</body>
+
+</html>
+	
+	
+	
+	
+	
+		
+	
